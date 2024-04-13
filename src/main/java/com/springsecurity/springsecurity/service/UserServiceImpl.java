@@ -27,4 +27,26 @@ public class UserServiceImpl implements UserService{
         Optional<User> byId = userRepository.findById(id);
         return byId.get();
     }
+
+    @Override
+    public User updateUser(User user) {
+        User user1 = userRepository.findById(user.getId()).get();
+        user1.setId(user.getId());
+        user1.setName(user.getName());
+        user1.setEmail(user.getEmail());
+        user1.setPassword(user.getPassword());
+
+        User save = userRepository.save(user1);
+        return save;
+    }
+
+    @Override
+    public String deleteUserById(Long id) {
+        if(userRepository.findById(id).isPresent()){
+            userRepository.deleteById(id);
+            return "student is delete succefully !!!";
+        }
+        return "Student is not available in the database";
+    }
+
 }
